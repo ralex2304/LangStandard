@@ -17,7 +17,6 @@
 | 8 | ASSIGNMENT_MUL  | BINARY |
 | 9 | ASSIGNMENT_DIV  | BINARY |
 |10 | RETURN          | UNARY  | Возврат из функции. Слева ничего, справа выражение
-|11 | NEW_SCOPE       | UNARY  | Область видимости переменных: слева ничего, справа список команд
 |15 | VAR_SEPARATOR   | LIST   | Имитатор списка для аргументов функции и т.п.
 |16 | FUNC_CALL       | BINARY | Вызов функции. Слева лист переменная, справа список выражений через VAR_SEPARATOR
 |20 | MATH_ADD        | BINARY | Сложение
@@ -47,7 +46,7 @@
 |57 | BREAK           | LEAF   | break
 |58 | CONTINUE        | LEAF   | continue
 |70 | IN              | LEAF   | команда асма IN
-|71 | OUT             | LEAF   | команда асма OUT
+|71 | OUT             | UNARY  | команда асма OUT. Слева ничего, справа выражение
 |72 | SHOW            | LEAF   | команда асма SHOW
 |73 | SET_FPS         | UNARY  | команда асма SET_FPS. Слева ничего, справа выражение
 
