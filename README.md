@@ -123,25 +123,26 @@ struct IRNode {
 | Num | Name                      |   src[0]           |   src[1]        |   dest           |  subType   | Description |
 |:---:|:--------------------------|:------------------:|:---------------:|:----------------:|:----------:|:------------|
 |  0  | NONE                      |                    |                 |                  |            | Empty block. May be used for jump destination
-|  1  | START                     |                    |                 |                  |            | Program beginning and entry point start
+|  1  | START                     | global vars number |                 |                  |            | Program beginning, initialization and entry point start. Must be the first block
 |  2  | END                       |                    |                 |                  |            | Entry point end
 |  3  | BEGIN_FUNC_DEF            | local vars number  |                 |                  |            | Function definition beginning
 |  4  | END_FUNC_DEF              |                    |                 |                  |            | Function definition end
 |  5  | CALL_FUNC                 | local vars number  |                 | func block index |            | Function call
 |  6  | RET                       |                    |                 |                  |            | Return from function
-|  7  | INIT_MEM_FOR_GLOBALS      | global vars number |                 |                  |            | Global scope variables memory and lib functions init
-|  8  | COUNT_ARR_ELEM_ADDR_CONST | offset             |                 |                  |            | Count address of array element
-|  9  | ARR_ELEM_ADDR_ADD_INDEX   | index source       | global or local |                  |            | Add value from stack to address of array element
-| 10  | MOV                       | source             | special data    | destination      |            | Mov value from src[0] to dest (stack, memory, register)
-| 11  | SWAP                      | operand 1          | operand 2       |                  |            | Swap 2 values from src[0] and src[1]
-| 12  | STORE_CMP_RES             | operand 1          | operand 2       | result           | `CmpType`  | Push bool result of comparison to stack
-| 13  | SET_FLAGS_CMP_WITH_ZERO   | operand            |                 |                  |            | Compare with zero and set comparison flags
-| 14  | MATH_OPER                 | operand 1          | operand 2       | result           | `MathOper` | Math operation
-| 15  | JUMP                      |                    |                 | dest block index | `JmpType`  | Conditional or unconditional jump
-| 16  | READ_DOUBLE               |                    |                 | value            |            | Read double precision floating point number from user
-| 17  | PRINT_DOUBLE              | value              |                 |                  |            | Print double precision floating point number
-| 18  | SET_FPS                   | value              |                 |                  |            | SPU: asm `fps <value>` - set max fps count for video mode
-| 19  | SHOW_VIDEO_FRAME          |                    |                 |                  |            | SPU: asm `shw` - show image frame in video mode
+|  7  | COUNT_ARR_ELEM_ADDR_CONST | offset             |                 |                  |            | Count address of array element
+|  8  | ARR_ELEM_ADDR_ADD_INDEX   | index source       | global or local |                  |            | Add value from stack to address of array element
+|  9  | MOV                       | source             | special data    | destination      |            | Mov value from src[0] to dest (stack, memory, register)
+| 10  | SWAP                      | operand 1          | operand 2       |                  |            | Swap 2 values from src[0] and src[1]
+| 11  | STORE_CMP_RES             | operand 1          | operand 2       | result           | `CmpType`  | Push bool result of comparison to stack
+| 12  | SET_FLAGS_CMP_WITH_ZERO   | operand            |                 |                  |            | Compare with zero and set comparison flags
+| 13  | MATH_OPER                 | operand 1          | operand 2       | result           | `MathOper` | Math operation
+| 14  | JUMP                      |                    |                 | dest block index | `JmpType`  | Conditional or unconditional jump
+| 15  | READ_DOUBLE               |                    |                 | value            |            | Read double precision floating point number from user
+| 16  | PRINT_DOUBLE              | value              |                 |                  |            | Print double precision floating point number
+| 17  | SET_FPS                   | value              |                 |                  |            | SPU: asm `fps <value>` - set max fps count for video mode
+| 18  | SHOW_VIDEO_FRAME          |                    |                 |                  |            | SPU: asm `shw` - show image frame in video mode
+
+Блок типа START должен быть первым, так как для некоторых архитектур он инициализирует память для дальнейшего использования.
 
 ### Формат `IRVal`
 
