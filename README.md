@@ -32,7 +32,7 @@
 | 1 | CMD_SEPARATOR    | LIST   | Разделитель команд. Имитирует список. Левый потомок - команда, правого или нет, или такой же разделитель
 | 2 | VAR_DEFINITION   | BINARY | Определение переменной. Слева лист типа переменная, справа либо ничего, либо выражение
 | 3 | CONST_VAR_DEF    | UNARY  | Опциональный родитель VAR_DEFINITION и ARRAY_DEFINITION
-| 4 | ARRAY_DEFINITION | BINARY | Определение массива. Слева поддерево: (VAR_SEPARATOR (переменная) (константное выражение - индекс)). Справа либо ничего, либо список выражений через VAR_SEPARATOR
+| 4 | ARRAY_DEFINITION | BINARY | Определение массива. Слева поддерево: (VAR_SEPARATOR (переменная) (константное выражение - размер массива)). Справа либо ничего, либо список выражений через VAR_SEPARATOR
 | 5 | FUNC_DEFINITION  | BINARY | Определение функции. Слева поддерево: (VAR_SEPARATOR (переменная) (поддерево аргументов (список из VAR_SEPARATOR))). Справа список команд через CMD_SEPARATOR
 | 6 | ASSIGNMENT       | BINARY | Присваивание. Слева лист переменная, справа выражение
 | 7 | ASSIGNMENT_ADD   | BINARY |
@@ -152,10 +152,10 @@ struct IRNode {
 |  5  | CALL_FUNC                 | local vars number  |                 | func block index |            | Function call
 |  6  | RET                       |                    |                 |                  |            | Return from function
 |  7  | COUNT_ARR_ELEM_ADDR_CONST | offset             |                 |                  |            | Count address of array element
-|  8  | ARR_ELEM_ADDR_ADD_INDEX   | index source       | global or local |                  |            | Add value from stack to address of array element
+|  8  | ARR_ELEM_ADDR_ADD_INDEX   | index source       | global or local |                  |            | Add value to address of array element
 |  9  | MOV                       | source             | special data    | destination      |            | Mov value from src[0] to dest (stack, memory, register)
 | 10  | SWAP                      | operand 1          | operand 2       |                  |            | Swap 2 values from src[0] and src[1]
-| 11  | STORE_CMP_RES             | operand 1          | operand 2       | result           | `CmpType`  | Push bool result of comparison to stack
+| 11  | STORE_CMP_RES             | operand 1          | operand 2       | result           | `CmpType`  | Write bool result of comparison
 | 12  | SET_FLAGS_CMP_WITH_ZERO   | operand            |                 |                  |            | Compare with zero and set comparison flags
 | 13  | MATH_OPER                 | operand 1          | operand 2       | result           | `MathOper` | Math operation
 | 14  | JUMP                      |                    |                 | dest block index | `JmpType`  | Conditional or unconditional jump
